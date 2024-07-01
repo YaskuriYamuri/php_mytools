@@ -20,9 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Yaskuriyamuri\\Php_mytools\\": "src/",
-            "Yaskuriyamuri\\Php_mytools\\Interface\\": "src/Interface/",
-            "Yaskuriyamuri\\Php_mytools\\Traits\\": "src/Traits/"
+            "Yaskuriyamuri\\Php_mytools\\": "src/"
         },
         "files": [
             "vendor/autoload.php"
