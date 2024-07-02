@@ -21,10 +21,7 @@
     "autoload": {
         "psr-4": {
             "Yaskuriyamuri\\Php_mytools\\": "src/"
-        },
-        "files": [
-            "index.php"
-        ]
+        } 
     },
     "config": {
         "apcu-autoloader": true,
