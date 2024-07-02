@@ -3,7 +3,7 @@
     "description": "Tools fungsi kostum untuk PHP",
     "type": "library",
     "license": "GPL-3.0-or-later",
-    "version": "v1.0.0",
+    "version": "v1.0.1",
     "authors": [
         {
             "name": "Yaskuri Yamuri",
@@ -23,7 +23,7 @@
             "Yaskuriyamuri\\Php_mytools\\": "src/"
         },
         "files": [
-            "vendor/autoload.php"
+            "index.php"
         ]
     },
     "config": {

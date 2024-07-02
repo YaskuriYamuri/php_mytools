@@ -2,69 +2,75 @@
 
 namespace Yaskuriyamuri\Php_mytools;
 
-class Environment  
-{
-    /** @var self */ private static $env;
-    use Traits\EnvironmentTrait;
-    static function GetEnvironment($name = "SYSENV", $prefix = "REDIRECT_", $prefixRepeated = 3, $suffix = null, $suffixRepeated = 0)
+class Environment implements Interfaces\EnvironmentInterface
+{ use Traits\EnvironmentTrait;
+    function __construct($name = 'SYSENV',  $prefix = 'REDIRECT_',  $prefixRepeated = 3,  $suffix = null,  $suffixRepeated = 0)
     {
-        self::$env->_env_init($name, $prefix, $prefixRepeated, $suffix, $suffixRepeated);
-        return self::$env->_getEnv();
-    }
-    static function GetName()
+        $this
+            ->setNameEnvironment($name)
+            ->setPrefixEnvironment($prefix)
+            ->setPrefixRepeatedEnvironment($prefixRepeated)
+            ->setSuffixEnvironment($suffix)
+            ->setSuffixRepeatedEnvironment($suffixRepeated);
+    } 
+    static function GetEnvironment($name = 'SYSENV',  $prefix = 'REDIRECT_',  $prefixRepeated = 3,  $suffix = null,  $suffixRepeated = 0)
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        return self::$env->_getProp(YY_ENV_PROP_NAME);
+        $self = new self($name,$prefix,$prefixRepeated,$suffix,$suffixRepeated);
+        return $self;
     }
-    static function GetPrefix()
+    function getNameEnvironment()
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        return self::$env->_getProp(YY_ENV_PROP_PREFIX);
+        return strval($this->_envName);
     }
-    static function GetPrefixRepeated()
+    function setNameEnvironment($value = 'SYSENV')
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        return self::$env->_getProp(YY_ENV_PROP_PREFIXREPEATED);
+        $this->_envName = strval($value);
+        return $this;
     }
-    static function GetSuffix()
+    function getPrefixEnvironment()
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        return self::$env->_getProp(YY_ENV_PROP_SUFFIX);
+        return strval($this->_envPrefix);
     }
-    static function GetSuffixRepeated()
+    function setPrefixEnvironment($value = 'REDIRECT_')
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        return self::$env->_getProp(YY_ENV_PROP_SUFFIXREPEATED);
+        $this->_envPrefix = strval($value);
+        return $this;
     }
-
-    static function SetName($value)
+    function getPrefixRepeatedEnvironment()
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        self::$env->_setProp(YY_ENV_PROP_NAME, $value);
-        return self::$env;
+        return intval($this->_envPrefixR);
     }
-    static function SetPrefix($value)
+    function setPrefixRepeatedEnvironment($value = 3)
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        self::$env->_setProp(YY_ENV_PROP_PREFIX, $value);
-        return self::$env;
+        $this->_envPrefixR=intval($value);
+        return $this;
     }
-    static function SetPrefixRepeated($value)
+    function getSuffixEnvironment()
+    {return strval($this->_envSuffix );
+    }
+    function setSuffixEnvironment($value = null)
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        self::$env->_setProp(YY_ENV_PROP_PREFIXREPEATED, $value);
-        return self::$env;
+        $this->_envSuffix = strval($value);
+        return $this;
     }
-    static function SetSuffix($value)
+    function getSuffixRepeatedEnvironment()
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        self::$env->_setProp(YY_ENV_PROP_SUFFIX, $value);
-        return self::$env;
+        return intval($this->_envSuffixR);
     }
-    static function SetSuffixRepeated($value)
+    function setSuffixRepeatedEnvironment($value = 0)
     {
-        if (is_null(self::$env)) self::$env->_env_init();
-        self::$env->_setProp(YY_ENV_PROP_SUFFIXREPEATED, $value);
-        return self::$env;
+        $this->_envSuffixR = intval($value); 
+        return $this;
     }
+     function __toString(){
+        $found = false;
+        for ($i = 0; $i <= $this->_envPrefixR; $i++) {
+            for ($j = 0; $j <= $this->_envSuffixR; $j++) {
+                $found = \getenv(\str_repeat($this->_envPrefix, $i) . $this->_envName . \str_repeat($this->_envSuffix, $i));
+                if ($found != false) break;
+            }
+            if ($found != false) break;
+        }
+        return strval($found);
+     }
 }
