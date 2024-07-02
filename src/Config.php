@@ -19,14 +19,19 @@ class Config implements Interfaces\ConfigInterface
         } catch (\Exception $e) {
             return false;
         }
-    }
-    /**
-     * @param int $seconds
-     * 
-     * @return bool
-     */
-    static function TimeLimit($seconds)
+    } 
+   /**
+    * 
+    * @param null|int $seconds set to null to get data 
+    * 
+    * @return int Returns the old value on success set data or get value if param seconds is null, false on failure.
+    */
+    static function MaxExecutionTime($seconds = null)
     {
-        return set_time_limit($seconds);
+        if (is_null($seconds)) {
+            return ini_get('max_execution_time');
+        } else {
+            return ini_set('max_execution_time', $seconds);
+        }
     }
 }

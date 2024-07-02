@@ -20,7 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Yaskuriyamuri\\Php_mytools\\": "src/"
+            "Yaskuriyamuri\\Php_mytools\\": "src/",
+            "Yaskuriyamuri\\Php_mytools_test\\": "test/"
         } 
     },
     "config": {
@@ -30,5 +31,8 @@
         "platform": {
             "php": "5.6.40"
         }
+    },
+    "scripts": {
+        "post-update-cmd": "./vendor/bin/phpunit --verbose --configuration phpunit.xml"
     }
 }
