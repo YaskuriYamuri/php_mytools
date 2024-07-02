@@ -3,11 +3,12 @@
 namespace Yaskuriyamuri\Php_mytools\Traits;
 
 /**
- * Traits untuk syntax environtment 
+ * Traits untuk syntax environment 
  */
 trait EnvironmentTrait
 {
     /**
+     * Membaca dari file .htaccess atau format sejenis
      * @param string $fileLocation
      * @return string|false 
      */ static function ReadEnvironmentFile($fileLocation, $name = null)
@@ -21,6 +22,16 @@ trait EnvironmentTrait
         endif;
     }
 
+    /**
+     * Menulis sebagai format .ht file 
+     *
+     * @param string $fileLocation
+     * @param string $name
+     * @param string $value
+     * @param string[] $contentBeforeValue 
+     * @param string[] $contentAfterValue 
+     * @return bool
+     */
     static function WriteEnvironmentFile($fileLocation, $name = "SYSENV", $value = "development", $contentBeforeValue = [], $contentAfterValue = [])
     {
         $fp = fopen($fileLocation, "w+");
@@ -30,14 +41,11 @@ trait EnvironmentTrait
             $contentBeforeValue[]="RewriteCond $1 !^(index\.php|resources|robots\.txt)";
             $contentBeforeValue[]="RewriteCond %{REQUEST_FILENAME} !-f";
             $contentBeforeValue[]="RewriteCond %{REQUEST_FILENAME} !-d";
-            $contentBeforeValue[]="RewriteRule ^(.*)$ index.php/$1 [L,QSA]";
-            $contentBeforeValue[]="<IfModule mod_env.c>";
+            $contentBeforeValue[]="RewriteRule ^(.*)$ index.php/$1 [L,QSA]"; 
         }
         foreach ($contentBeforeValue as $line) fwrite($fp, $line . PHP_EOL);
-        fwrite($fp, implode(" ", ["\tSetEnv", $name, $value]) . PHP_EOL);
-        if(count($contentAfterValue)==0){ 
-            $contentAfterValue[]="</IfModule>";
-        }
+        fwrite($fp, "<IfModule mod_env.c>".PHP_EOL.implode(" ", ["\tSetEnv", $name, $value]) . PHP_EOL."</IfModule>".PHP_EOL);
+
         foreach ($contentAfterValue as $line) fwrite($fp, $line . PHP_EOL);
         fclose($fp);
         return true;
