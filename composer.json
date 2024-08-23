@@ -3,7 +3,7 @@
     "description": "Tools fungsi kostum untuk PHP",
     "type": "library",
     "license": "GPL-3.0-or-later",
-    "version": "v1.0.3",
+    "version": "v1.0.4",
     "authors": [
         {
             "name": "Yaskuri Yamuri",
