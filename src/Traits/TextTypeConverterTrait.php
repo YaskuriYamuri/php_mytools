@@ -170,10 +170,10 @@ trait TextTypeConverterTrait
            case 'nchar':
            case 'char':
                return $length ? "CHAR($length)" : "CHAR";
-           case 'ntext':
-               return 'TEXT';
-           default:die(var_dump($type,$length));
+           case 'ntext': 
+           default:
                return 'TEXT';
        }
    }
+   
 }

@@ -20,6 +20,9 @@ class DatabaseDataTypeConverterTest extends TestCase
         $this->assertEquals('TEXT', DatabaseDataTypeConverter::sqlServerToSQLite3('nvarchar'));
         $this->assertEquals('CHAR(10)', DatabaseDataTypeConverter::sqlServerToSQLite3('nchar', 10));
         $this->assertEquals('TEXT', DatabaseDataTypeConverter::sqlServerToSQLite3('ntext'));
+        $this->assertEquals('TEXT', DatabaseDataTypeConverter::sqlServerToSQLite3('text'));
+        $this->assertEquals('TEXT', DatabaseDataTypeConverter::sqlServerToSQLite3('varchar'));
+        $this->assertEquals('CHAR', DatabaseDataTypeConverter::sqlServerToSQLite3('char'));
         $this->assertEquals('BOOLEAN', DatabaseDataTypeConverter::sqlServerToSQLite3('bit'));
         $this->assertEquals('DATETIME', DatabaseDataTypeConverter::sqlServerToSQLite3('datetime'));
         $this->assertEquals('REAL', DatabaseDataTypeConverter::sqlServerToSQLite3('float'));
